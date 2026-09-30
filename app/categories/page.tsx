@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { categoryType, userContextType } from "@/types/types";
-import { useUserContext } from "@/context/context";
+import { categoryType } from "@/types/types";
+import FavoriteButton from "./favoriteButton";
 
 const Categories = async () => {
 
@@ -14,28 +14,25 @@ const Categories = async () => {
     console.log(error)
   }
 
-    const {user, setUser} = useUserContext() as userContextType
-    
-    const handleClick = () => {
-      
-      if (user) {setUser({...user, category:})}
-    }
-    
   return (
     <>
       <h2>Categories page</h2>
+      <div className="flex justify-evenly flex-wrap px-6">
       {categories! && categories.map((category:categoryType, index)=> {
-      return (
-        <Link key={category.idCategory} href={`/category/${category.strCategory}`}>
-        <div className="relative h-80 w-110">
-          <Image src={category.strCategoryThumb} alt={category.strCategory} fill />
-        </div>
-        <h3 className="">{category.strCategory}</h3>
-        <p>{category.strCategoryDescription}</p>
-        <button className="" onClick>Like this category</button>
-        </Link>
-      )
-    })}
+        return (
+          <Link className="w-1/3 p-4" key={category.idCategory} href={`/category/${category.strCategory}`}>
+          <div className="relative h-80 w-110">
+            <Image src={category.strCategoryThumb} alt={category.strCategory} fill />
+          </div>
+          <div className="flex justify-between pb-3">
+            <h3 className="text-2xl">{category.strCategory}</h3>
+            <FavoriteButton category={category.strCategory} />
+          </div>
+          <p className="">{category.strCategoryDescription}</p>
+          </Link>
+        )
+     })}
+      </div>
     </>
 
   )
