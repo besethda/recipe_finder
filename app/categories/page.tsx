@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { categoryType } from "@/types/types";
+import { categoryType, userContextType } from "@/types/types";
+import { useUserContext } from "@/context/context";
 
 const Categories = async () => {
 
@@ -12,6 +13,14 @@ const Categories = async () => {
   } catch(error) {
     console.log(error)
   }
+
+    const {user, setUser} = useUserContext() as userContextType
+    
+    const handleClick = () => {
+      
+      if (user) {setUser({...user, category:})}
+    }
+    
   return (
     <>
       <h2>Categories page</h2>
@@ -23,6 +32,7 @@ const Categories = async () => {
         </div>
         <h3 className="">{category.strCategory}</h3>
         <p>{category.strCategoryDescription}</p>
+        <button className="" onClick>Like this category</button>
         </Link>
       )
     })}

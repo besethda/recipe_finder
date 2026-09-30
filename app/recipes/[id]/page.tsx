@@ -1,29 +1,41 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { useParams } from "next/navigation"
 import Image from "next/image"
 import SaveRecipe from "@/components/SaveButton"
 import { fullRecipeType } from "@/types/types"
 
-const Recipe = async ({params}: {params: Promise<{ id: string }>}) => {
-  const { id } = await params
-  let recipe: fullRecipeType
+const Recipe = () => {
+  const { id } = useParams<{ id: string }>()
+  const [recipe, setRecipe] = useState<fullRecipeType | null>(null)
 
-  try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}lookup.php?i=${id}`)
-      const data = await response.json();
-      recipe = data.meals[0]
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}lookup.php?i=${id}`)
+        const data = await response.json();
+        const meal: fullRecipeType = data.meals[0]
 
-      if(recipe) {
-        const keys = Object.keys(recipe!). filter(key => key.includes("strIngredient"))
-        const keysWithValue = keys.filter((key: string) => recipe[key as keyof fullRecipeType] !== "" && recipe[key as keyof fullRecipeType] !== null)
-        const ingredients = keysWithValue.map((key, index) => `${recipe[key as keyof fullRecipeType]} - ${recipe[`strMeasure${index + 1}` as keyof fullRecipeType]}` )
-        recipe.ingredients = ingredients
+        if (meal) {
+          const keys = Object.keys(meal).filter(key => key.includes("strIngredient"))
+          const keysWithValue = keys.filter((key: string) => meal[key as keyof fullRecipeType] !== "" && meal[key as keyof fullRecipeType] !== null)
+          const ingredients = keysWithValue.map((key, index) => `${meal[key as keyof fullRecipeType]} - ${meal[`strMeasure${index + 1}` as keyof fullRecipeType]}`)
+          meal.ingredients = ingredients
+        }
+
+        setRecipe(meal)
+      } catch (error) {
+        console.log(error)
       }
-    } catch(error) {
-      console.log(error)
     }
+
+    fetchRecipe()
+  }, [id])
 
   return (
   <>
-      {recipe! && <div className="">
+      {recipe && <div className="">
         <div className="relative h-80 w-100">
           <Image src={recipe.strMealThumb} alt={recipe.idMeal} fill />
         </div>
@@ -40,4 +52,3 @@ const Recipe = async ({params}: {params: Promise<{ id: string }>}) => {
 }
 
 export default Recipe
-

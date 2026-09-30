@@ -1,3 +1,4 @@
+
 import RecipeCard from "@/components/RecipeCard";
 import { recipeType } from "@/types/types";
 

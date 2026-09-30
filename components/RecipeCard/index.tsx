@@ -1,3 +1,5 @@
+"use client"
+
 import { recipeType, userType } from "@/types/types"
 import Image from "next/image"
 import Link from "next/link"
