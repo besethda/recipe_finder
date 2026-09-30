@@ -1,19 +1,16 @@
 import { recipeType, userType } from "@/types/types"
 import Image from "next/image"
 import Link from "next/link"
-import { userContextType } from "@/types/types"
-import { useUserContext } from "@/context/context"
+import SaveRecipe from "../SaveButton"
 
-const RecipeCard = ({idMeal, strMeal, strMealThumb}: recipeType) => {
-    const { user, setUser } = useUserContext() as userContextType
-  
+const RecipeCard = ({idMeal, strMeal, strMealThumb}: recipeType) => {  
   return (
-    <Link key={idMeal} href={`/recipes/${idMeal}`}>
-      <div className="relative h-80 w-110">
-        <Image src={strMealThumb} alt={idMeal} fill />
+    <Link className="p-4 flex justify-center w-1/4 flex-col" key={idMeal} href={`/recipes/${idMeal}`}>
+      <div className="relative w-full aspect-video">
+        <Image className="object-cover" src={strMealThumb} alt={idMeal} fill />
       </div>
       <h2>{strMeal}</h2>
-      <div>Add to likes</div>
+      <SaveRecipe idMeal={idMeal} strMeal={strMeal} strMealThumb={strMealThumb}/>
     </Link>
   )
 }
