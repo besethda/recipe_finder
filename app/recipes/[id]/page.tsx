@@ -35,16 +35,19 @@ const Recipe = () => {
 
   return (
   <>
-      {recipe && <div className="">
-        <div className="relative h-80 w-100">
+      {recipe && <div className="flex flex-col items-center pt-8">
+        <div className="relative h-80 max-w-120 min-w-90">
           <Image src={recipe.strMealThumb} alt={recipe.idMeal} fill />
+          <div className="w-full h-full flex items-center justify-center absolute top-0">
+            <h2 className="text-center text-4xl bg-mauve-600/40 backdrop-blur-xs text-white px-3 py-1">{recipe.strMeal}</h2>
+          </div>
+          <p className="absolute bottom-0 left-0 p-1 bg-mauve-600/40 backdrop-blur-xs text-white">Country: {recipe.strCountry}</p>
         </div>
-        <p>{recipe.strCountry}</p>
-        <h2 className="">{recipe.strMeal}</h2>
-        <div className="">
-          {recipe.ingredients.map((e, i)=><div key={i} className="">{e}</div>)}
+        <h2 className="text-2xl my-3">Ingredients:</h2>
+        <div className="grid grid-cols-2 border-y border-primary p-2 ">
+          {recipe.ingredients.map((e, i)=><div key={i} className="px-3">{e}</div>)}
         </div>
-        <div className="">{recipe.strInstructions}</div>
+        <div className="px-6 max-w-130 my-5">{recipe.strInstructions}</div>
         <SaveRecipe {...recipe}/>
     </div>}
   </>

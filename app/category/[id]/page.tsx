@@ -15,7 +15,7 @@ const Category = async ({params}: {params: Promise<{ id: string }>}) => {
   
   return (
     <>
-      <div className="flex flex-wrap px-4">
+      <div className="flex flex-wrap justify-center px-4">
         {recipes && recipes.map((e:recipeType, i:number)=> <RecipeCard key={e.idMeal} {...e}/>)}
       </div>
     </>

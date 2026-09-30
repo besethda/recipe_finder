@@ -20,7 +20,7 @@ const FavoriteButton = ({category}: {category: string}) => {
   }
 
   return(
-    <button onClick={handleClick} className="">{saveButtonText}</button>
+    <button onClick={handleClick} className="absolute top-2 right-2 z-100">{saveButtonText}</button>
   )
 }
 

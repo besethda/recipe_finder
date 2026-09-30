@@ -40,8 +40,12 @@ export default function Home() {
   }, [user?.category])
 
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans">
+    <div className="flex flex-col flex-1 items-center justify-center font-sans">
+      <div className="">
+        <h1 className="text-4xl text-center">Welcome to my recipe website!</h1>
+      </div>
       {recipe && <RecipeCard idMeal={recipe.idMeal} strMeal={recipe.strMeal} strMealThumb={recipe.strMealThumb} />}
+      <h3>Try this one out!</h3>
     </div>
   )
 }
